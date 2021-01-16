@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>課題C</title>
+    <style>
+        #map_canvas {
+            width: 600px;
+            height: 600px;
+        }
+    </style>
+</head>
+
+<body>
+    <!--
+        興味をもった地点をふくむ地図を表示する。その地点にマーカーを表示する。
+        マーカーをクリックすると、その地点に関する説明、興味をもった理由を情報ウィンドウInfoWindow　に表示する。
+    -->
+    <h1>Google マップ API</h1>
+
+    <div id="map_canvas"></div>
+    <script>
+        function initMap() {
+            var myOptions = {
+                zoom: 14,
+                center: { lat: 35.768547, lng: 139.420517 },
+                mapTypeId: google.maps.MapTypeId.TERRAIN,
+                disableDefaultUI: true,
+                zoomControl: true,
+                mapTypeControl: true,
+                scaleControl: true
+            }
+            var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+
+            var icon = {
+                url: "https://maps.google.com/mapfiles/kml/pushpin/red-pushpin.png",
+                scaledSize: new google.maps.Size(30, 30),
+                Origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(0, 0)
+            };
+
+            var marker = new google.maps.Marker({
+                position: { lat: 35.768547, lng: 139.420517 },
+                icon: icon,
+                map: map
+            });
+
+            var contentString = '<div id="content"><h2>埼玉西武ライオンズの本拠地</h2><p>私が大好きな球団の本拠地なので、この場所を選びました。</p></div>';
+
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+
+            marker.addListener('click', function () {
+                infowindow.open(map, marker);
+            });
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAiV2ZbFIYuD3N4hzGLstSn2e4ZG5A7QlU&callback=initMap"
+        async defer></script>
+
+</body>
+
+</html>
